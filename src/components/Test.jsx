@@ -2,6 +2,8 @@ import React from "react";
 import Rectangle from "./Rectangle";
 import axios from "axios";
 
+/* eslint-disable no-undef */
+
 class Test extends React.Component {
   state = {
     settings: {},
@@ -10,7 +12,11 @@ class Test extends React.Component {
     screenWidth: 0,
     screenHeight: 0,
     xOffset: 0,
-    yOffset: 0
+    yOffset: 0,
+
+    blinked: false,
+    firstBlinkLetter: null,
+    firstBlinkTime: null,
   };
 
   componentWillMount() {
@@ -18,11 +24,20 @@ class Test extends React.Component {
   }
 
   componentDidMount() {
+    webgazer.showPredictionPoints(true).resume();
+    webgazer.setGazeListener((data, elapsed) => {
+      if (data != null) {
+        console.log(elapsed);
+      }
+    }).begin();
+
+
     window.addEventListener("resize", this.updateWindowDimensions);
 
     const instance = axios.create({
-      baseURL: "http://localhost:8080/api/",
+      baseURL: "http://localhost:5000/api/",
       timeout: 1000,
+      headers: {'Authorization': 'Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJ0ZXN0QHRlc3QuY29tIiwibmJmIjoxNTI1NzcwODkxLCJleHAiOjE1MjU4NTcyOTEsImlhdCI6MTUyNTc3MDg5MX0.jGX1WIOzJn-ocgmO8NfuLF8M9aO38Jdp8W5WT2p6YbLg2-zUB647_NKE8YBycvkh7h_D14liIyY22-4wAoCzcQ'}
     });
 
     instance
@@ -40,13 +55,15 @@ class Test extends React.Component {
   }
 
   handleResponse = response => {
-    this.setState({ settings: response.data[0] })
+    this.setState({ settings: response.data })
     this.setState({ secondsLeft: this.state.settings.testDurationInSeconds })
     this.interval = setInterval(() => this.tick(), 1000);
   }
 
   tick() {
-    console.log(this.state.divisionFactor);
+
+
+
     this.setState ({
       secondsLeft: this.state.secondsLeft - 1
     });
@@ -54,8 +71,6 @@ class Test extends React.Component {
     if (this.state.secondsLeft === 0) {
 
       if(this.state.settings.numberOfTests === 0) {
-
-        console.log("Stop app");
         clearInterval(this.interval);
         return
       }
@@ -78,6 +93,7 @@ class Test extends React.Component {
   componentWillUnmount() {
     clearInterval(this.interval);
     window.removeEventListener("resize", this.updateWindowDimensions);
+    webgazer.showPredictionPoints(false).clearGazeListener().pause();
   }
 
   updateWindowDimensions = () => {
@@ -96,18 +112,22 @@ class Test extends React.Component {
   };
 
   calculateRectangleXOffset = () => {
-    const min = 0;
     // Avoid showing rectangle out of screen
+    const min = 0;
     const max = this.state.screenWidth - this.calculateRectangleWidth();
+
+    // Show rectangle on random x coordinate within defined bounds
     const randomXOffset =
       Math.floor(Math.random() * max + min) / this.state.screenWidth;
     this.setState({ xOffset: randomXOffset });
   };
 
   calculateRectangleYOffset = () => {
+     // Avoid showing rectangle out of screen
     const min = 0;
-    // Avoid showing rectangle out of screen
     const max = this.state.screenHeight - this.calculateRectangleHeight();
+
+    // Show rectangle on random y coordinate within defined bounds
     const randomYOffset =
       Math.floor(Math.random() * max + min) / this.state.screenHeight;
     this.setState({ yOffset: randomYOffset });
