@@ -34,9 +34,7 @@ class Test extends React.Component {
 
   componentDidMount() {
     this.startWebGazer();
-
    // window.addEventListener("resize", this.updateWindowDimensions);
-
     this.getTestConfig();
   }
 
@@ -50,7 +48,6 @@ class Test extends React.Component {
   startWebGazer() {
     webgazer.showPredictionPoints(true);
     webgazer.begin();
-    //webgazer.setGazeListener((data, elapsed) => {}).begin();
   }
 
   handleResponse = response => {
@@ -91,10 +88,6 @@ class Test extends React.Component {
     return false;
   }
 
-  componentDidUpdate(prevProps) {
-    console.log("Component did update");
-  }
-
   runEverySecond() {
 
     this.setState ({
@@ -118,10 +111,7 @@ class Test extends React.Component {
         divisionFactor: this.state.divisionFactor + 1
       });
     }
-
   }
-
-
 
   calculateRectData = () => {
     this.calculateRectangleWidth();
@@ -145,15 +135,15 @@ class Test extends React.Component {
     });
   };
 
-  calculateRectangleWidth = () => {
+  calculateRectangleWidth() {
     this.setState({rectWidth: this.state.screenWidth / this.state.divisionFactor});
   };
 
-  calculateRectangleHeight = () => {
+  calculateRectangleHeight() {
     this.setState({rectHeight: this.state.screenHeight / this.state.divisionFactor});
   };
 
-  calculateRectangleXOffset = () => {
+  calculateRectangleXOffset() {
     // Avoid showing rectangle out of screen
     const min = 0;
     const max = this.state.screenWidth - this.state.rectWidth;
@@ -164,7 +154,7 @@ class Test extends React.Component {
     this.setState({ rectXOffset: randomXOffset });
   };
 
-  calculateRectangleYOffset = () => {
+  calculateRectangleYOffset() {
      // Avoid showing rectangle out of screen
     const min = 0;
     const max = this.state.screenHeight - this.state.rectHeight;
@@ -175,15 +165,13 @@ class Test extends React.Component {
     this.setState({ rectYOffset: randomYOffset });
   };
 
-  calculateRectangleX = () => {
+  calculateRectangleX() {
     this.setState({rectX: this.state.screenWidth * this.state.rectXOffset});
   };
 
-  calculateRectangleY = () => {
+  calculateRectangleY() {
     this.setState({rectY: this.state.screenHeight * this.state.rectYOffset});
   };
-
-
 
   render() {
     return (
