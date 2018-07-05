@@ -57,11 +57,12 @@ class Test extends React.Component {
   }
 
   getTestConfig() {
+    const token = localStorage.getItem('jwtToken');
     instance
       .get("settings", {
         headers: {
           Authorization:
-            "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJ0ZXN0QHRlc3QuY29tIiwibmJmIjoxNTMwNjA4NjcxLCJleHAiOjE1MzA2OTUwNzEsImlhdCI6MTUzMDYwODY3MX0._7DE_VQX9a2hm6ctqfdspGY_qskvIv4yFARkd0Uu8wlUQWILpVaPkEOvyHea16qsqnEDMISqFCxGNzXfQlhSjg"
+            "Bearer " + token
         }
       })
       .then(res => this.handleResponse(res))
