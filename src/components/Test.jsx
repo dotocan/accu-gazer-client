@@ -12,16 +12,19 @@ class Test extends React.Component {
       measurements: [],
     },
 
+    rectangle: {
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0
+    },
+
     screenWidth: 0,
     screenHeight: 0,
-    gazerX: 0,
-    gazerY: 0,
 
-    rectData: {
-      rectX: 0,
-      rectY: 0,
-      rectWidth: 0,
-      rectHeight: 0
+    gazePoint: {
+      x: 0,
+      y: 0
     },
 
     settings: {
@@ -90,9 +93,13 @@ class Test extends React.Component {
   runEveryHalfSecond() {
     // Save current measurement data
     const measurements = this.state.testResult.measurements;
+    const gazePoint = this.state.gazePoint;
+    gazePoint.x = webgazer.getCurrentPrediction().x;
+    gazePoint.y = webgazer.getCurrentPrediction().y;
+
     const measurement = {
-      rectData: this.state.rectData,
-      gazer: webgazer.getCurrentPrediction(),
+      rectangle: this.state.rectangle,
+      gazePoint: gazePoint,
       date: new Date().getTime()
     };
 
@@ -122,7 +129,7 @@ class Test extends React.Component {
       }
 
       // Calculate new rect data only when seconds reach 0
-      newState.rectData = this.calculateRectData(newState);
+      newState.rectangle = this.calculateRectData(newState);
 
       // Reset seconds counter and increment division factor
       newState.secondsLeft = this.state.settings.testDurationInSeconds;
@@ -138,17 +145,17 @@ class Test extends React.Component {
     result.screenHeight = this.state.screenHeight;
 
     for (let measurement of result.measurements) {
-      if (measurement.gazer !== null) {
-        const {x: gazerX, y: gazerY} = measurement.gazer;
-        const {rectWidth, rectHeight, rectX, rectY} = measurement.rectData;
+      if (measurement.gazePoint !== null) {
+        const gazePoint = measurement.gazePoint;
+        const {width, height, x, y} = measurement.rectangle;
 
-        const rectStartX = rectX;
-        const rectEndX = rectX + rectWidth;
-        const rectStartY = rectY;
-        const rectEndY = rectY + rectHeight;
+        const rectStartX = x;
+        const rectEndX = x + width;
+        const rectStartY = y;
+        const rectEndY = y + height;
 
-        const gazerIsInXBounds = (gazerX >= rectStartX) && (gazerX <= rectEndX);
-        const gazerIsInYBounds = (gazerY >= rectStartY) && (gazerY <= rectEndY);
+        const gazerIsInXBounds = (gazePoint-x >= rectStartX) && (gazePoint.x <= rectEndX);
+        const gazerIsInYBounds = (gazePoint.y >= rectStartY) && (gazePoint.y <= rectEndY);
         if (gazerIsInXBounds && gazerIsInYBounds) console.log("True");
         else console.log("False");
       }
@@ -156,12 +163,12 @@ class Test extends React.Component {
   }
 
   calculateRectData = newState => {
-    newState.rectData.rectWidth = this.calculateRectangleWidth(newState);
-    newState.rectData.rectHeight = this.calculateRectangleHeight(newState);
-    newState.rectData.rectX = this.calculateRectangleX(newState);
-    newState.rectData.rectY = this.calculateRectangleY(newState);
+    newState.rectangle.width = this.calculateRectangleWidth(newState);
+    newState.rectangle.height = this.calculateRectangleHeight(newState);
+    newState.rectangle.x = this.calculateRectangleX(newState);
+    newState.rectangle.x = this.calculateRectangleY(newState);
 
-    return newState.rectData;
+    return newState.rectangle;
   };
 
   componentWillUnmount() {
@@ -191,7 +198,7 @@ class Test extends React.Component {
 
   calculateRectangleX(newState) {
     const minX = 0;
-    const maxX = newState.screenWidth - newState.rectData.rectWidth;
+    const maxX = newState.screenWidth - newState.rectangle.width;
 
     const rectXOffset = this.calculateRectangleOffset(
       minX,
@@ -204,7 +211,7 @@ class Test extends React.Component {
 
   calculateRectangleY(newState) {
     const minY = 0;
-    const maxY = newState.screenHeight - newState.rectData.rectHeight;
+    const maxY = newState.screenHeight - newState.rectangle.height;
 
     const rectYOffset = this.calculateRectangleOffset(
       minY,
@@ -221,10 +228,10 @@ class Test extends React.Component {
         <p>Number of tests left: {this.state.testsLeft}</p>
         <p>Seconds left: {this.state.secondsLeft}</p>
         <Rectangle
-          width={this.state.rectData.rectWidth}
-          height={this.state.rectData.rectHeight}
-          x={this.state.rectData.rectX}
-          y={this.state.rectData.rectY}
+          width={this.state.rectangle.width}
+          height={this.state.rectangle.height}
+          x={this.state.rectangle.x}
+          y={this.state.rectangle.y}
         />
       </React.Fragment>
     );

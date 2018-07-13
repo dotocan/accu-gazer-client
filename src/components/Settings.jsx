@@ -1,35 +1,34 @@
 import React from "react";
-import axios from "axios";
+import instance from "../config/axios";
 
 class Settings extends React.Component {
   state = {
-    settings: []
+    settings: {
+      numberOfTests: 0,
+      shuffle: false,
+      testDurationInSeconds: 0
+    }
   };
 
   componentDidMount() {
-    const instance = axios.create({
-      baseURL: "http://localhost:8080/api/",
-      timeout: 1000,
-      headers: { "X-Custom-Header": "foobar" }
-    });
-
+    const token = localStorage.getItem("jwtToken");
     instance
-      .get("settings")
+      .get("settings", {
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      })
       .then(res => this.setState({ settings: res.data }))
       .catch(err => console.log(err));
   }
 
   render() {
     return (
-      <ul>
-        {this.state.settings.map(setting => (
-          <React.Fragment>
-            <li>Number of tests: {setting.numberOfTests}</li>
-            <li>Shuffle: {setting.shuffle.toString()}</li>
-            <li>Test duration in seconds: {setting.testDurationInSeconds}</li>
-          </React.Fragment>
-        ))}
-      </ul>
+      <React.Fragment>
+        <p>Number of tests: {this.state.settings.numberOfTests}</p>
+        <p>Shuffle: {this.state.settings.shuffle.toString()}</p>
+        <p>Test duration in seconds: {this.state.settings.testDurationInSeconds}</p>
+      </React.Fragment>
     );
   }
 }
