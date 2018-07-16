@@ -2,16 +2,17 @@ import React from "react";
 import Rectangle from "./Rectangle";
 import instance from "../config/axios";
 /* eslint-disable no-undef */
-var counter = 0;
+
+let counter = 0;
+
+let testResult = {
+  screenWidth: 0,
+  screenHeight: 0,
+  measurements: []
+};
 
 class Test extends React.Component {
   state = {
-    testResult: {
-      screenWidth: 0,
-      screenHeight: 0,
-      measurements: [],
-    },
-
     rectangle: {
       x: 0,
       y: 0,
@@ -22,11 +23,6 @@ class Test extends React.Component {
     screenWidth: 0,
     screenHeight: 0,
 
-    gazePoint: {
-      x: 0,
-      y: 0
-    },
-
     settings: {
       numberOfTests: 0,
       shuffle: false,
@@ -35,11 +31,7 @@ class Test extends React.Component {
 
     testsLeft: 0,
     secondsLeft: 0,
-    divisionFactor: 2,
-
-    blinked: false,
-    firstBlinkLetter: null,
-    firstBlinkTime: null
+    divisionFactor: 2
   };
 
   componentWillMount() {
@@ -47,25 +39,16 @@ class Test extends React.Component {
   }
 
   componentDidMount() {
-    this.startWebGazer();
+   // this.startWebGazer();
     this.getTestConfig();
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.secondsLeft !== nextState.secondsLeft) {
-      return true;
-    }
-
-    return false;
-  }
-
   getTestConfig() {
-    const token = localStorage.getItem('jwtToken');
+    const token = localStorage.getItem("jwtToken");
     instance
       .get("settings", {
         headers: {
-          Authorization:
-            "Bearer " + token
+          Authorization: "Bearer " + token
         }
       })
       .then(res => this.handleResponse(res))
@@ -73,12 +56,15 @@ class Test extends React.Component {
   }
 
   startWebGazer() {
-    webgazer.showPredictionPoints(true);
-    webgazer.begin();
+    webgazer
+      .setRegression("ridge")
+      .setTracker("clmtrackr")
+      .showPredictionPoints(true)
+      .begin();
   }
 
   handleResponse = response => {
-    const newState = {...this.state};
+    const newState = { ...this.state };
 
     newState.settings = response.data;
     newState.secondsLeft = response.data.testDurationInSeconds;
@@ -91,19 +77,26 @@ class Test extends React.Component {
   };
 
   runEveryHalfSecond() {
+    console.log("half second passed");
     // Save current measurement data
-    const measurements = this.state.testResult.measurements;
-    const gazePoint = this.state.gazePoint;
-    gazePoint.x = webgazer.getCurrentPrediction().x;
-    gazePoint.y = webgazer.getCurrentPrediction().y;
+   /* let gazePoint = {
+      x: 0,
+      y: 0
+    };
 
-    const measurement = {
-      rectangle: this.state.rectangle,
+    if (webgazer.getCurrentPrediction()) {
+      gazePoint.x = webgazer.getCurrentPrediction().x;
+      gazePoint.y = webgazer.getCurrentPrediction().y;
+    }
+
+    let measurement = {
+      rectangle: { ...this.state.rectangle },
       gazePoint: gazePoint,
       date: new Date().getTime()
     };
 
-    measurements.push(measurement);
+    // Save current measurement into test result
+    testResult.measurements.push(measurement);*/
 
     counter++;
     if (counter % 2 === 0) {
@@ -122,9 +115,7 @@ class Test extends React.Component {
       if (newState.testsLeft === 0) {
         clearInterval(this.interval);
         webgazer.pause();
-
-        this.printResults();
-
+   /*     this.printResults(); */
         return;
       }
 
@@ -140,22 +131,44 @@ class Test extends React.Component {
   }
 
   printResults() {
-    const result = {...this.state.testResult};
-    result.screenWidth = this.state.screenWidth;
-    result.screenHeight = this.state.screenHeight;
+    testResult.screenWidth = this.state.screenWidth;
+    testResult.screenHeight = this.state.screenHeight;
 
-    for (let measurement of result.measurements) {
+    for (let measurement of testResult.measurements) {
       if (measurement.gazePoint !== null) {
-        const gazePoint = measurement.gazePoint;
-        const {width, height, x, y} = measurement.rectangle;
+        let gazePoint = measurement.gazePoint;
+        let { width, height, x, y } = measurement.rectangle;
 
-        const rectStartX = x;
-        const rectEndX = x + width;
-        const rectStartY = y;
-        const rectEndY = y + height;
+        let rectStartX = x;
+        let rectEndX = x + width;
+        let rectStartY = y;
+        let rectEndY = y + height;
 
-        const gazerIsInXBounds = (gazePoint-x >= rectStartX) && (gazePoint.x <= rectEndX);
-        const gazerIsInYBounds = (gazePoint.y >= rectStartY) && (gazePoint.y <= rectEndY);
+        console.log(
+          "Rect start x: " +
+            rectStartX +
+            "\n" +
+            "Rect end x: " +
+            rectEndX +
+            "\n" +
+            "Rect start y: " +
+            rectStartY +
+            "\n" +
+            "Rect end y: " +
+            rectEndY +
+            "\n" +
+            "Gaze x: " +
+            gazePoint.x +
+            "\n" +
+            "Gaze y: " +
+            gazePoint.y +
+            "\n"
+        );
+
+        let gazerIsInXBounds =
+          gazePoint.x >= rectStartX && gazePoint.x <= rectEndX;
+        let gazerIsInYBounds =
+          gazePoint.y >= rectStartY && gazePoint.y <= rectEndY;
         if (gazerIsInXBounds && gazerIsInYBounds) console.log("True");
         else console.log("False");
       }
@@ -166,15 +179,14 @@ class Test extends React.Component {
     newState.rectangle.width = this.calculateRectangleWidth(newState);
     newState.rectangle.height = this.calculateRectangleHeight(newState);
     newState.rectangle.x = this.calculateRectangleX(newState);
-    newState.rectangle.x = this.calculateRectangleY(newState);
+    newState.rectangle.y = this.calculateRectangleY(newState);
 
     return newState.rectangle;
   };
 
   componentWillUnmount() {
     clearInterval(this.interval);
-    webgazer
-      .pause();
+    webgazer.pause();
   }
 
   updateWindowDimensions = () => {

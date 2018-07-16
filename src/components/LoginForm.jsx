@@ -1,5 +1,6 @@
 import React from "react";
-import instance from "../config/axios";
+import { connect } from 'react-redux';
+import * as userActions from '../actions/userActions';
 
 class LoginForm extends React.Component {
   state = {
@@ -10,22 +11,12 @@ class LoginForm extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    let data = JSON.stringify({
+    let loginData = JSON.stringify({
       email: this.state.email,
       password: this.state.password
     });
 
-    instance
-      .post("auth/login", data, {
-        headers: { "content-type": "application/json" }
-      })
-      .then(res => this.handleResponse(res))
-      .catch(err => console.log(err));
-  };
-
-  handleResponse = res => {
-    const jwtToken = res.data.tokenString;
-    localStorage.setItem("jwtToken", jwtToken);
+    this.props.onLogin(loginData);
   };
 
   handleEmailChange = event => {
@@ -74,4 +65,12 @@ class LoginForm extends React.Component {
   }
 }
 
-export default LoginForm;
+const mapStateToProps = (state) => {
+  return { data: state.user } 
+}
+
+const mapDispatchToProps = dispatch => {
+  return { onLogin: loginData => dispatch(userActions.login(loginData)) }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
