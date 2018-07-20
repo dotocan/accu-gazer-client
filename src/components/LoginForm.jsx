@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
-import * as userActions from '../actions/userActions';
+import * as authActions from '../actions/authActions';
 
 class LoginForm extends React.Component {
   state = {
@@ -15,6 +15,7 @@ class LoginForm extends React.Component {
       email: this.state.email,
       password: this.state.password
     });
+    
 
     this.props.onLogin(loginData);
   };
@@ -66,11 +67,12 @@ class LoginForm extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return { data: state.user } 
+  return { data: state.auth } 
 }
 
 const mapDispatchToProps = dispatch => {
-  return { onLogin: loginData => dispatch(userActions.login(loginData)) }
+  return { onLogin: loginData => dispatch(authActions.login(loginData)) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+ 

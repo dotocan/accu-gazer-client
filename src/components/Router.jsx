@@ -5,6 +5,7 @@ import RegistrationForm from "./RegistrationForm";
 import Test from "./Test";
 import Settings from "./Settings";
 import NotFound from "./NotFound";
+import InternalServerError from './ErrorPages/InternalServerError';
 
 const Router = () => (
   <BrowserRouter>
@@ -13,6 +14,7 @@ const Router = () => (
       <Route exact path="/register" component={RegistrationForm} />
       <Route exact path="/test" component={Test} />
       <Route exact path="/settings" component={Settings} />
+      <Route exact path="/500" component={InternalServerError} />
       <Route component={NotFound}/>
     </Switch>
   </BrowserRouter>

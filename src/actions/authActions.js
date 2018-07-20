@@ -1,5 +1,6 @@
 import actionTypes from "./_actionTypes";
 import instance from "../config/axios";
+import * as errorHandlerActions from './errorHandlerActions';
 
 export const login = loginData => {
   return dispatch => {
@@ -12,10 +13,8 @@ export const login = loginData => {
         });
       })
       .catch(err => {
-        dispatch({
-          type: actionTypes.LOGIN_ERROR,
-          data: err
-        });
+        dispatch(errorHandlerActions.handleHTTPError(err));
       });
   };
 };
+

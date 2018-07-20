@@ -4,7 +4,7 @@ import keys from '../config/keys';
 
 const handleLoginRequest = (state, action) => {
     const newState = { ...state }
-    newState.login.showLoading = true;
+    newState.auth.showLoading = true;
     return { ...newState }
 }
 
@@ -12,18 +12,18 @@ const handleLoginSuccess = (state, action) => {
     // Save JWT to local storage
     localStorage.setItem(keys.storageTokenKey, action.data.tokenString);
     const newState = { ...state }
-    newState.login.showLoading = false;
-    newState.login.isUserLoggedIn = true;
+    newState.auth.showLoading = false;
+    newState.auth.isUserLoggedIn = true;
     return { ...newState }
 }
 
 const handleLoginError = (state, action) => {
     const newState = { ...state }
-    newState.login.showLoading = false;
+    newState.auth.showLoading = false;
     return { ...newState }
 }
 
-const loginReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action) => {
     switch(action.type) {
         case actionTypes.LOGIN_REQUEST:
             handleLoginRequest(state, action);
@@ -41,4 +41,4 @@ const loginReducer = (state = initialState, action) => {
     }
 }
 
-export default loginReducer;
+export default authReducer;

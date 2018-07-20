@@ -10,6 +10,7 @@
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
     crossorigin="anonymous">
+    <script async type="text/javascript" src="%PUBLIC_URL%/webgazer.js"></script>
 
   <title>AccuGazer</title>
 </head>
@@ -20,15 +21,17 @@
   </noscript>
   <div id="root"></div>
 
-  <script type="text/javascript" src="%PUBLIC_URL%/webgazer.js"></script>
 
   <script>
-      /*webgazer
+
+      window.onload = function() {
+        webgazer
         .setRegression("ridge")
         .setTracker("clmtrackr")
         .showPredictionPoints(true)
-        .begin();*/
+        .begin();
     
+      }
   </script>
 </body>
 

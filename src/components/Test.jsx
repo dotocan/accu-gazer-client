@@ -79,7 +79,7 @@ class Test extends React.Component {
   runEveryHalfSecond() {
     console.log("half second passed");
     // Save current measurement data
-   /* let gazePoint = {
+    let gazePoint = {
       x: 0,
       y: 0
     };
@@ -96,7 +96,7 @@ class Test extends React.Component {
     };
 
     // Save current measurement into test result
-    testResult.measurements.push(measurement);*/
+    testResult.measurements.push(measurement);
 
     counter++;
     if (counter % 2 === 0) {

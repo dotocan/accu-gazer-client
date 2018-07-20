@@ -1,7 +1,12 @@
 const initialState = {
-    login: {
+    auth: {
         showLoading: false,
         isUserLoggedIn: false,
+    },
+    error: {
+        code: 0,
+        message: "",
+        showModal: false
     }
 }
 
