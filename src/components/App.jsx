@@ -1,10 +1,14 @@
-import React, { Component } from 'react';
-import Router from './Router';
+import React, { Component } from "react";
+import Router from "./Router";
+import Header from "./Header";
 
 class App extends Component {
   render() {
     return (
-      <Router />
+      <React.Fragment>
+        <Header />
+        <Router />
+      </React.Fragment>
     );
   }
 }

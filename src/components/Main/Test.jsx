@@ -1,6 +1,6 @@
 import React from "react";
 import Rectangle from "./Rectangle";
-import instance from "../config/axios";
+import instance from "../../config/axios";
 /* eslint-disable no-undef */
 
 let counter = 0;
