@@ -1,4 +1,4 @@
-import initialState from './initialState';
+import initialState from './_initialState';
 import actionTypes from '../actions/_actionTypes';
 import keys from '../config/keys';
 
@@ -9,11 +9,15 @@ const handleLoginRequest = (state, action) => {
 }
 
 const handleLoginSuccess = (state, action) => {
-    // Save JWT to local storage
-    localStorage.setItem(keys.storageTokenKey, action.data.tokenString);
+    localStorage.setItem(keys.storageTokenKey, action.payload.token);
+   
     const newState = { ...state }
     newState.auth.showLoading = false;
-    newState.auth.isUserLoggedIn = true;
+    newState.auth.signedIn = true;
+    newState.auth.user = action.payload.user;
+
+    console.log(newState);
+
     return { ...newState }
 }
 
@@ -26,16 +30,13 @@ const handleLoginError = (state, action) => {
 export const authReducer = (state = initialState, action) => {
     switch(action.type) {
         case actionTypes.LOGIN_REQUEST:
-            handleLoginRequest(state, action);
-            break;
+            return handleLoginRequest(state, action);
         case actionTypes.LOGIN_SUCCESS:
-            console.log("Login success: " + JSON.stringify(action.data));
-            handleLoginSuccess(state, action);
-            break;
+            console.log("Login success: " + JSON.stringify(action.payload));
+            return handleLoginSuccess(state, action);
         case actionTypes.LOGIN_FAILED:
-            console.log("Login failed: " + JSON.stringify(action.data));
-            handleLoginError(state, action);
-            break;
+            console.log("Login failed: " + JSON.stringify(action.payload));
+            return handleLoginError(state, action);
         default:
             return state;
     }

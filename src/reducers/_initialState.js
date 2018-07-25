@@ -1,12 +1,7 @@
 const initialState = {
     auth: {
         showLoading: false,
-        isUserLoggedIn: false,
-        userRegisterData: {},
-        userLoginData: {
-            email: "",
-            password: ""
-        },
+        signedIn: false,
         user: {
             id: -1,
             firstName: "",

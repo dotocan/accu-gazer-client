@@ -1,5 +1,5 @@
 const keys = {
-    storageTokenKey: "storageTokenKey"
+    storageTokenKey: "token"
 }
 
 export default keys;

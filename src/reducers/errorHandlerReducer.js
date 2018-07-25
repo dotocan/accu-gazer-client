@@ -1,4 +1,4 @@
-import initialState from './initialState';
+import initialState from './_initialState';
 import actionTypes from '../actions/_actionTypes';
 
 const execute404 = (state, action) => {
@@ -20,13 +20,10 @@ const errorHandlerReducer = (state = initialState, action) => {
     switch(action.type) {
         case actionTypes.HTTP_404:
             return execute404(state, action);
-            break;
         case actionTypes.HTTP_500:
             return execute500(state, action);
-            break;
         case actionTypes.HTTP_OTHER:
             return executeOther(state, action);
-            break;
         default: 
             return state;
     }

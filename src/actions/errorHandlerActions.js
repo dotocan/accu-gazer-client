@@ -22,6 +22,7 @@ const executeOtherErrorHandler = (error) => {
 }
 
 export const handleHTTPError = (error) => {
+  console.log(error);
   if(error.response.status === 404) {
     return execute404Handler(error);
   } else if (error.response.status = 500) {
