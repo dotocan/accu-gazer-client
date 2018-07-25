@@ -1,8 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import LoginForm from "./Auth/LoginForm";
-import RegistrationForm from "./Auth/RegistrationForm";
 import Main from "./Main/Main";
+import RegistrationForm from "./Auth/RegistrationForm";
 import Settings from "./Settings";
 import NotFound from "./ErrorPages/NotFound";
 import InternalServerError from './ErrorPages/InternalServerError';
@@ -10,7 +9,7 @@ import InternalServerError from './ErrorPages/InternalServerError';
 const Router = () => (
   <BrowserRouter>
     <Switch>
-      <Route exact path="/" component={LoginForm} />
+      <Route exact path="/" component={Main} />
       <Route exact path="/register" component={RegistrationForm} />
       <Route exact path="/test" component={Main} />
       <Route exact path="/settings" component={Settings} />
