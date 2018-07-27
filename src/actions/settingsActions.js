@@ -1,16 +1,22 @@
 import actionTypes from "./_actionTypes";
 import instance from "../config/axios";
+import keys from '../config/keys';
 //import * as errorHandlerActions from './errorHandlerActions';
 
-export const updateLoginForm = newLoginData => {};
+const token = 'Bearer ' + localStorage.getItem(keys.storageTokenKey);
 
-export const login = loginData => {
+export const getSettings = () => {
   return dispatch => {
+    dispatch({
+        type: actionTypes.GET_SETTINGS_REQUEST,
+        payload: ""
+    });
+
     instance
-      .post("auth/login", loginData)
+      .get("settings", { headers: {'Authorization': token} })
       .then(res => {
         dispatch({
-          type: actionTypes.LOGIN_SUCCESS,
+          type: actionTypes.GET_SETTINGS_SUCCESS,
           payload: res.data
         });
       })
@@ -18,14 +24,5 @@ export const login = loginData => {
         console.log("Error: " + err);
         //dispatch(errorHandlerActions.handleHTTPError(err));
       });
-  };
-};
-
-export const logout = () => {
-  return dispatch => {
-    dispatch({
-      type: actionTypes.LOGOUT,
-      payload: false
-    });
   };
 };

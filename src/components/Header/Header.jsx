@@ -2,15 +2,16 @@ import React from "react";
 import SignOutDropdown from "./SignOutDropdown";
 import SignInButtons from "./SignInButtons";
 import { connect } from "react-redux";
+import Link from "../../../node_modules/react-router-dom/Link";
 
 class Header extends React.Component {
   render() {
     return (
       <div className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
-          <a href="/" className="navbar-brand">
+          <Link to="/" className="navbar-brand">
             AccuGazer
-          </a>
+          </Link>
 
           <button
             className="navbar-toggler"
@@ -22,22 +23,8 @@ class Header extends React.Component {
           </button>
 
           <div className="navbar-collapse collapse" id="navbarResponsive">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <a className="nav-link" href="/">
-                  Home
-                </a>
-              </li>
-
-              <li className="nav-item">
-                <a className="nav-link" href="/settings">
-                  Settings
-                </a>
-              </li>
-            </ul>
-
-            {this.props.auth.auth.signedIn ? (
-              <SignOutDropdown name={this.props.auth.auth.user.firstName} />
+            {this.props.store.auth.signedIn ? (
+              <SignOutDropdown name={this.props.store.auth.user.firstName} />
             ) : (
               <SignInButtons />
             )}
@@ -49,7 +36,7 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return { auth: state.auth };
+  return { store: state.auth };
 };
 
 export default connect(mapStateToProps)(Header);
