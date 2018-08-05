@@ -23,8 +23,8 @@ class Header extends React.Component {
           </button>
 
           <div className="navbar-collapse collapse" id="navbarResponsive">
-            {this.props.store.auth.signedIn ? (
-              <SignOutDropdown name={this.props.store.auth.user.firstName} />
+            {this.props.auth.signedIn ? (
+              <SignOutDropdown name={this.props.auth.user.firstName} />
             ) : (
               <SignInButtons />
             )}
@@ -36,7 +36,7 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return { store: state.auth };
+  return { auth: state.auth };
 };
 
 export default connect(mapStateToProps)(Header);

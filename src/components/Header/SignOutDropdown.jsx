@@ -35,15 +35,11 @@ class SignOutDropdown extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return { auth: state.auth };
-};
-
 const mapDispatchToProps = dispatch => {
   return { onLogout: () => dispatch(authActions.logout()) };
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(SignOutDropdown);

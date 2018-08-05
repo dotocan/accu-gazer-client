@@ -5,12 +5,12 @@ const SignInButtons = () => {
   return (
     <ul className="navbar-nav ml-auto">
       <li className="nav-item">
-        <Link className="nav-link" to="/register">
+        <Link className="nav-link" to="/signup">
           Sign Up
         </Link>
       </li>
       <li className="nav-item">
-        <Link className="nav-link" to="/">
+        <Link className="nav-link" to="/signin">
           Sign in
         </Link>
       </li>

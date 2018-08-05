@@ -1,10 +1,24 @@
-import initialState from "./_initialState";
 import actionTypes from "../actions/_actionTypes";
 import keys from "../config/keys";
 
+const initialState = {
+  showLoading: false,
+    showError: false,
+    signedIn: false,
+    user: {
+      id: -1,
+      firstName: "",
+      lastName: "",
+      gender: "",
+      dateOfBirth: 0,
+      email: "",
+      tests: []
+    }
+}
+
 const handleLoginRequest = (state, action) => {
   const newState = { ...state };
-  newState.auth.showLoading = true;
+  newState.showLoading = true;
   return { ...newState };
 };
 
@@ -12,16 +26,16 @@ const handleLoginSuccess = (state, action) => {
   localStorage.setItem(keys.storageTokenKey, action.payload.token);
 
   const newState = { ...state };
-  newState.auth.showLoading = false;
-  newState.auth.signedIn = true;
-  newState.auth.user = action.payload.user;
+  newState.showLoading = false;
+  newState.signedIn = true;
+  newState.user = action.payload.user;
 
   return { ...newState };
 };
 
 const handleLoginError = (state, action) => {
   const newState = { ...state };
-  newState.auth.showLoading = false;
+  newState.showLoading = false;
   return { ...newState };
 };
 
@@ -29,7 +43,7 @@ const handleLogout = (state, action) => {
   localStorage.removeItem(keys.storageTokenKey);
 
   const newState = { ...state };
-  newState.auth.signedIn = false;
+  newState.signedIn = false;
   return { ...newState };
 };
 

@@ -1,17 +1,15 @@
-import React from 'react';
-import LoginForm from '../Auth/LoginForm';
-import { connect } from "react-redux";
-import TestContainer from './TestContainer';
+import React from "react";
+import Test from './Test';
+import Calibration from './Calibration';
 
 class Main extends React.Component {
+  state = {
+    isCalibrated: false
+  };
 
-    render() {
-        return this.props.auth.auth.signedIn ? <TestContainer /> : <LoginForm />;
-    }
+  render() {
+    return this.state.isCalibrated ? <Test /> : <Calibration />;
+  }
 }
 
-const mapStateToProps = state => {
-    return { auth: state.auth };
-}
-
-export default connect(mapStateToProps)(Main);
+export default Main;

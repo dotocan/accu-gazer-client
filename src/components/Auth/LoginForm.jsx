@@ -60,15 +60,11 @@ class LoginForm extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return { auth: state.auth };
-};
-
 const mapDispatchToProps = dispatch => {
   return { onLogin: loginData => dispatch(authActions.login(loginData)) };
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(LoginForm);

@@ -10,16 +10,16 @@ class Settings extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <p>Number of tests: {this.props.store.settings.data.numberOfTests}</p>
-        <p>Shuffle: {this.props.store.settings.data.shuffle.toString()}</p>
-        <p>Test duration in seconds: {this.props.store.settings.data.testDurationInSeconds}</p>
+        <p>Number of tests: {this.props.settings.data.numberOfTests}</p>
+        <p>Shuffle: {this.props.settings.data.shuffle.toString()}</p>
+        <p>Test duration in seconds: {this.props.settings.data.testDurationInSeconds}</p>
       </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = state => {
-  return { store: state.settings };
+  return { settings: state.settings };
 }
 
 const mapDispatchToProps = dispatch => {

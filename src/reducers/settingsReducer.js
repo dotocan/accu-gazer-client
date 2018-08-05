@@ -1,22 +1,31 @@
-import initialState from "./_initialState";
 import actionTypes from "../actions/_actionTypes";
+
+const initialState = {
+  showLoading: false,
+  showError: false,
+  data: {
+    numberOfTests: 0,
+    shuffle: false,
+    testDurationInSeconds: 0
+  }
+};
 
 const handleGetSettingsRequest = (state, action) => {
   const newState = { ...state };
-  newState.settings.showLoading = true;
+  newState.showLoading = true;
   return { ...newState };
 };
 
 const handleGetSettingsSuccess = (state, action) => {
   const newState = { ...state };
-  newState.settings.showLoading = false;
-  newState.settings.data = action.payload;
+  newState.showLoading = false;
+  newState.data = action.payload;
   return { ...newState };
 };
 
 const handleGetSettingsError = (state, action) => {
   const newState = { ...state };
-  newState.settings.showLoading = false;
+  newState.showLoading = false;
   return { ...newState };
 };
 
