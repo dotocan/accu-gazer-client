@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { ClearCanvas } from "./canvasManager";
-import { RunTest } from "./testManager";
+import { RunTest } from "./measurementManager";
 import { ShowCalibrationInstructionAlert, ShowMeasurementInstructionAlert } from "./alerts";
 
 let PointCalibrate = 0;
