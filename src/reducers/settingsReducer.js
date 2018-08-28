@@ -4,9 +4,9 @@ const initialState = {
   showLoading: false,
   showError: false,
   data: {
-    numberOfTests: 0,
+    numberOfRectanglesInTest: 0,
     shuffle: false,
-    testDurationInSeconds: 0
+    rectangleDuration: 0
   }
 };
 

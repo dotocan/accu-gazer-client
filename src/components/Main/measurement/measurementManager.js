@@ -2,8 +2,7 @@
 import screen from "./screenData";
 import { Context, ClearCanvas } from "./canvasManager";
 import { ShowCompletedMeasurementAlert } from './alerts';
-import { GetResults } from './results';
-import { Test } from './test';
+import { Test, UpdateMeasurements } from './test';
 
 let numberOfTests = 5;
 let testDurationInSeconds = 5;
@@ -21,8 +20,6 @@ let rectangle = {
   height: 0
 }
 
-let measurements = [];
-
 export const RunTest = () => {
   // Calculate first rect data outside loop
   updateRectData();
@@ -33,8 +30,8 @@ export const RunTest = () => {
   Test.startTime = new Date().getTime();
 
   // Save test screen width and height
-  Test.testResult.screenWidth = screen.width;
-  Test.testResult.screenHeight = screen.height;
+  Test.screenWidth = screen.width;
+  Test.screenHeight = screen.height;
 
   interval = setInterval(() => {
     runTestLoop();
@@ -69,7 +66,8 @@ function runTestLoop() {
         // Save test end time
         Test.endTime = new Date().getTime();
 
-        Test.testResult.measurements = GetResults(measurements);
+        // Update test measurements with isHit
+        UpdateMeasurements();
 
         clearInterval(interval);
         console.log("Test finished, results: " + JSON.stringify(Test));
@@ -85,7 +83,7 @@ function saveMeasurement() {
   let gazerX = 0;
   let gazerY = 0;
 
-  if(gazer == null) {
+  if(gazer !== null) {
     gazerX = gazer.x;
     gazerY = gazer.y;
   }
@@ -103,7 +101,7 @@ function saveMeasurement() {
     gazePoint
   };
 
-  measurements.push(measurement);
+  Test.measurements.push(measurement);
 }
 
 function drawRect() {
@@ -120,11 +118,11 @@ function updateRectData() {
 }
 
 function calculateRectWidth() {
-  rectangle.width = screen.width / divisionFactor;
+  rectangle.width = Math.round(screen.width / divisionFactor);
 }
 
 function calculateRectHeight() {
-  rectangle.height = screen.height / divisionFactor;
+  rectangle.height = Math.round(screen.height / divisionFactor);
 }
 
 function getRectOffset(min, max, dimension) {
