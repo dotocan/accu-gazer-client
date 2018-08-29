@@ -17,9 +17,7 @@ const actionTypes = {
     POST_TESTS_SUCCESS: "POST_TESTS_SUCCESS",
     POST_TESTS_ERROR: "POST_TESTS_ERROR",
 
-    HTTP_404: "HTTP_404",
-    HTTP_500: "HTTP_500",
-    HTTP_OTHER: "HTTP_OTHER",
+    HTTP_ERROR: "HTTP_ERROR",
 }
 
 export default actionTypes;

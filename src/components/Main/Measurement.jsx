@@ -4,12 +4,23 @@ import React from "react";
 import { canvas } from './measurement/canvasManager';
 import { SetupCalibration, RestartCalibration } from "./measurement/main";
 import { InitButtonListener } from "./measurement/calibrationManager";
+import { Test } from './measurement/test';
+import { connect } from 'react-redux';
+import * as testActions from '../../actions/testActions';
 
 class Measurement extends React.Component {
   componentDidMount() {
     SetupCalibration();
     RestartCalibration();
     InitButtonListener();
+
+    document.addEventListener('finishedTest', () => {
+      this.props.onTestSend(Test)
+    });
+  }
+
+  saveTest = () => {
+    
   }
 
   render() {
@@ -33,4 +44,8 @@ class Measurement extends React.Component {
   }
 }
 
-export default Measurement;
+const mapDispatchToProps = dispatch => {
+  return { onTestSend: testData => dispatch(testActions.saveTest(testData)) };
+};
+
+export default connect(null, mapDispatchToProps)(Measurement);

@@ -10,9 +10,9 @@ class Settings extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <p>Number of tests: {this.props.settings.data.numberOfTests}</p>
+        <p>Number of rectangles in test: {this.props.settings.data.numberOfRectanglesInTest}</p>
         <p>Shuffle: {this.props.settings.data.shuffle.toString()}</p>
-        <p>Test duration in seconds: {this.props.settings.data.testDurationInSeconds}</p>
+        <p>Rectangle duration in seconds: {this.props.settings.data.rectangleDuration}</p>
       </React.Fragment>
     );
   }

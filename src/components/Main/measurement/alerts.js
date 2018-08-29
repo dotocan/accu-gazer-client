@@ -30,6 +30,8 @@ export const ShowCompletedMeasurementAlert = () => {
   }).then(isConfirm => {
     if (isConfirm) {
       ClearCanvas();
+      var event = new Event('finishedTest');
+      document.dispatchEvent(event);
     } else {
       ClearCalibration();
       ClearCanvas();

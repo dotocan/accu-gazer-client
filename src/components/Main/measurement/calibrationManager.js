@@ -75,7 +75,6 @@ export const InitButtonListener = () => {
  * This function clears the calibration buttons memory
  */
 export const ClearCalibration = () => {
-  window.localStorage.clear();
   $(".Calibration").css("background-color", "red");
   $(".Calibration").css("opacity", 0.2);
   $(".Calibration").prop("disabled", false);

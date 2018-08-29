@@ -1,11 +1,16 @@
 import actionTypes from "./_actionTypes";
 import instance from "../config/axios";
-//import * as errorHandlerActions from './errorHandlerActions';
+import * as errorHandlerActions from "./errorHandlerActions";
 
 export const updateLoginForm = newLoginData => {};
 
 export const login = loginData => {
   return dispatch => {
+    dispatch({
+      type: actionTypes.LOGIN_REQUEST,
+      payload: ""
+    });
+
     instance
       .post("auth/login", loginData)
       .then(res => {
@@ -15,8 +20,7 @@ export const login = loginData => {
         });
       })
       .catch(err => {
-        console.log("Error: " + err);
-        //dispatch(errorHandlerActions.handleHTTPError(err));
+        dispatch(errorHandlerActions.handleHTTPError(err));
       });
   };
 };

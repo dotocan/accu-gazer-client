@@ -1,9 +1,14 @@
 /* eslint-disable no-undef */
-import { SetupVideoFeed } from './videoFeedManager';
+import { SetupVideoFeed } from "./videoFeedManager";
 import { SetupCanvas } from "./canvasManager";
 import { ClearCalibration, PopUpInstruction } from "./calibrationManager";
+import { screen } from './screen';
 
 export const SetupCalibration = () => {
+  // Update screen dimensions
+  screen.width = window.innerWidth;
+  screen.height = window.innerHeight;
+
   //start the webgazer tracker
   webgazer
     .setRegression("ridge") /* currently must set regression and tracker */
@@ -33,8 +38,4 @@ export const SetupCalibration = () => {
 export const RestartCalibration = () => {
   ClearCalibration();
   PopUpInstruction();
-};
-
-export const Unload = () => {
-  window.localStorage.clear(); //Comment out if you want to save data across different sessions
 };

@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import screen from "./screenData";
+import { screen } from "./screen";
 import { Context, ClearCanvas } from "./canvasManager";
 import { ShowCompletedMeasurementAlert } from './alerts';
 import { Test, UpdateMeasurements } from './test';
@@ -70,7 +70,6 @@ function runTestLoop() {
         UpdateMeasurements();
 
         clearInterval(interval);
-        console.log("Test finished, results: " + JSON.stringify(Test));
         ShowCompletedMeasurementAlert();
       }
     }
@@ -95,6 +94,7 @@ function saveMeasurement() {
 
   let measuredAt = new Date().getTime();
 
+  console.log("Current rect data " + JSON.stringify(rectangle));
   let measurement = { 
     measuredAt,
     rectangle,

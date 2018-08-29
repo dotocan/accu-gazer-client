@@ -1,9 +1,6 @@
 import actionTypes from "./_actionTypes";
 import instance from "../config/axios";
-import keys from '../config/keys';
-//import * as errorHandlerActions from './errorHandlerActions';
-
-const token = 'Bearer ' + localStorage.getItem(keys.storageTokenKey);
+import * as errorHandlerActions from './errorHandlerActions';
 
 export const getSettings = () => {
   return dispatch => {
@@ -13,7 +10,7 @@ export const getSettings = () => {
     });
 
     instance
-      .get("settings", { headers: {'Authorization': token} })
+      .get("settings")
       .then(res => {
         dispatch({
           type: actionTypes.GET_SETTINGS_SUCCESS,
@@ -22,7 +19,7 @@ export const getSettings = () => {
       })
       .catch(err => {
         console.log("Error: " + err);
-        //dispatch(errorHandlerActions.handleHTTPError(err));
+        dispatch(errorHandlerActions.handleHTTPError(err));
       });
   };
 };

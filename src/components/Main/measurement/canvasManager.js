@@ -1,4 +1,4 @@
-import screen from "./screenData";
+import { screen } from './screen';
 
 export const SetupCanvas = () => {
   Canvas().width = screen.width;
