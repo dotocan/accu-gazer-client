@@ -59,8 +59,6 @@ function runTestLoop() {
       // Draw new rect every time timer reaches zero
       updateRectData();
       drawRect();
-
-      console.log(Test);
   
       if (numberOfTests === 0) {
         // Save test end time

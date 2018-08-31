@@ -53,7 +53,7 @@ export const authReducer = (state = initialState, action) => {
       return handleLoginRequest(state, action);
     case actionTypes.LOGIN_SUCCESS:
       return handleLoginSuccess(state, action);
-    case actionTypes.LOGIN_FAILED:
+    case actionTypes.LOGIN_ERROR:
       return handleLoginError(state, action);
     case actionTypes.LOGOUT:
       return handleLogout(state, action);

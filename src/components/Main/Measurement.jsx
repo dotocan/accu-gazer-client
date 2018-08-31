@@ -19,10 +19,6 @@ class Measurement extends React.Component {
     });
   }
 
-  saveTest = () => {
-    
-  }
-
   render() {
     return (
       <div className="h-100">
