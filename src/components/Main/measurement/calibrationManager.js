@@ -10,7 +10,7 @@ export function HideCalibrationPoint() {
   $(".Calibration").hide();
 }
 
-function ShowCalibrationPoint() {
+function ShowCalibrationPoints() {
   $(".Calibration").show();
   $("#Pt5").hide(); // initially hides the middle button
 }
@@ -21,14 +21,15 @@ function ShowCalibrationPoint() {
 export const PopUpInstruction = () => {
   HideCalibrationPoint();
   ClearCanvas();
-  ShowCalibrationInstructionAlert(ShowCalibrationPoint);
+  ShowCalibrationInstructionAlert(ShowCalibrationPoints);
 };
 
 
 /**
  * Load this function when the Measurement component mounts.
  * This function listens for button clicks on the html page
- * checks that all buttons have been clicked 5 times each, and then goes on to measuring accuracy.
+ * checks that all buttons have been clicked 5 times each, 
+ * and then goes on to measuring accuracy.
  */
 export const InitButtonListener = () => {
   HideCalibrationPoint();
@@ -49,12 +50,14 @@ export const InitButtonListener = () => {
       $(this).prop("disabled", true); //disables the button
       PointCalibrate++;
     } else if (CalibrationPoints[id] < 5) {
-      //Gradually increase the opacity of calibration points when click to give some indication to user.
+      //Gradually increase the opacity of calibration points 
+      // when clicked to give some indication to user.
       var opacity = 0.2 * CalibrationPoints[id] + 0.2;
       $(this).css("opacity", opacity);
     }
 
-    //Show the middle calibration point after all other points have been clicked.
+    //Show the middle calibration point after 
+    //all other points have been clicked.
     if (PointCalibrate === 8) {
       $("#Pt5").show();
     }

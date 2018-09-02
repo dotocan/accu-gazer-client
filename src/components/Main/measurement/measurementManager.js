@@ -105,7 +105,8 @@ function saveMeasurement() {
 function drawRect() {
   ClearCanvas();
   Context().fillStyle = "black";
-  Context().fillRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+  Context().fillRect(rectangle.x, rectangle.y, 
+    rectangle.width, rectangle.height);
 }
 
 function updateRectData() {

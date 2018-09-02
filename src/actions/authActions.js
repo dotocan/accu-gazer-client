@@ -20,7 +20,7 @@ export const login = loginData => {
       .catch(err => {
         dispatch({
           type: actionTypes.LOGIN_ERROR,
-          payload: error
+          payload: err
         });
       });
   };
