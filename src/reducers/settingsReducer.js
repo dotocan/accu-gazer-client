@@ -25,6 +25,7 @@ const handleGetSettingsSuccess = (state, action) => {
 
 const handleGetSettingsError = (state, action) => {
   const newState = { ...state };
+  console.log(action.payload)
   newState.showLoading = false;
   return { ...newState };
 };

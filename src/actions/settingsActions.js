@@ -1,6 +1,5 @@
 import actionTypes from "./_actionTypes";
 import instance from "../config/axios";
-import * as errorHandlerActions from './errorHandlerActions';
 
 export const getSettings = () => {
   return dispatch => {
@@ -18,8 +17,10 @@ export const getSettings = () => {
         });
       })
       .catch(err => {
-        console.log("Error: " + err);
-        dispatch(errorHandlerActions.handleHTTPError(err));
+        dispatch({
+          type: actionTypes.GET_SETTINGS_ERROR,
+          payload: err
+        });
       });
   };
 };

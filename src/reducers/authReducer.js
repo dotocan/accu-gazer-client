@@ -36,6 +36,7 @@ const handleLoginSuccess = (state, action) => {
 const handleLoginError = (state, action) => {
   const newState = { ...state };
   newState.showLoading = false;
+  console.log(action.payload)
   return { ...newState };
 };
 

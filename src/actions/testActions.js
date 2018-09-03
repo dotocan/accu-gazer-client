@@ -1,6 +1,5 @@
 import actionTypes from "./_actionTypes";
 import instance from "../config/axios";
-import * as errorHandlerActions from "./errorHandlerActions";
 
 export const saveTest = testData => {
   return dispatch => {
@@ -18,7 +17,10 @@ export const saveTest = testData => {
         });
       })
       .catch(err => {
-        dispatch(errorHandlerActions.handleHTTPError(err));
+        dispatch({
+          type: actionTypes.POST_TESTS_ERROR,
+          data: err
+        });
       });
   };
 };

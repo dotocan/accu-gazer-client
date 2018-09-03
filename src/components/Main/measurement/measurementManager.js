@@ -3,6 +3,7 @@ import { screen } from "./screen";
 import { Context, ClearCanvas } from "./canvasManager";
 import { ShowCompletedMeasurementAlert } from './alerts';
 import { Test, UpdateMeasurements } from './test';
+import { AnalyzeResults } from './analysis';
 
 let numberOfTests = 5;
 let testDurationInSeconds = 5;
@@ -13,7 +14,7 @@ let secondsLeft = testDurationInSeconds;
 let loopPasses = 0;
 
 // Rect data
-let rectangle = {
+let rect = {
   x: 0,
   y: 0,
   width: 0,
@@ -68,6 +69,9 @@ function runTestLoop() {
         UpdateMeasurements();
 
         clearInterval(interval);
+
+        AnalyzeResults();
+
         ShowCompletedMeasurementAlert();
       }
     }
@@ -90,9 +94,16 @@ function saveMeasurement() {
     y: gazerY
   }
 
+  let rectangle = {
+    x: rect.x,
+    y: rect.y,
+    width: rect.width,
+    height: rect.height
+  }
+
   let measuredAt = new Date().getTime();
 
-  console.log("Current rect data " + JSON.stringify(rectangle));
+  console.log("Current rect data " + JSON.stringify(rect));
   let measurement = { 
     measuredAt,
     rectangle,
@@ -100,13 +111,14 @@ function saveMeasurement() {
   };
 
   Test.measurements.push(measurement);
+  console.log("Test measurements: " + JSON.stringify(Test.measurements));
 }
 
 function drawRect() {
   ClearCanvas();
   Context().fillStyle = "black";
-  Context().fillRect(rectangle.x, rectangle.y, 
-    rectangle.width, rectangle.height);
+  Context().fillRect(rect.x, rect.y, 
+    rect.width, rect.height);
 }
 
 function updateRectData() {
@@ -117,11 +129,11 @@ function updateRectData() {
 }
 
 function calculateRectWidth() {
-  rectangle.width = Math.round(screen.width / divisionFactor);
+  rect.width = Math.round(screen.width / divisionFactor);
 }
 
 function calculateRectHeight() {
-  rectangle.height = Math.round(screen.height / divisionFactor);
+  rect.height = Math.round(screen.height / divisionFactor);
 }
 
 function getRectOffset(min, max, dimension) {
@@ -130,18 +142,18 @@ function getRectOffset(min, max, dimension) {
 
 function calculateRectX() {
   const minX = 0;
-  const maxX = screen.width - rectangle.width;
+  const maxX = screen.width - rect.width;
 
   const rectXOffset = getRectOffset(minX, maxX, screen.width);
 
-  rectangle.x = screen.width * rectXOffset;
+  rect.x = Math.floor(screen.width * rectXOffset);
 }
 
 function calculateRectY() {
   const minY = 0;
-  const maxY = screen.height - rectangle.height;
+  const maxY = screen.height - rect.height;
 
   const rectYOffset = getRectOffset(minY, maxY, screen.height);
 
-  rectangle.y = screen.height * rectYOffset;
+  rect.y = Math.floor(screen.height * rectYOffset);
 }

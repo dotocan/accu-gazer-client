@@ -10,6 +10,9 @@ export const UpdateMeasurements = () => {
     let updatedMeasurements = [];
   
     for (let measurement of Test.measurements) {
+
+      console.log("Currect rect in measurement before update: " + JSON.stringify(measurement.rectangle));
+
       
       let rectStartX = measurement.rectangle.x;
       let rectEndX = measurement.rectangle.x + measurement.rectangle.width;
@@ -28,6 +31,7 @@ export const UpdateMeasurements = () => {
   
       measurement.isHit = isHit;
   
+      console.log("Currect rect in measurement after update: " + JSON.stringify(measurement.rectangle));
       updatedMeasurements.push(measurement);
     }
   
