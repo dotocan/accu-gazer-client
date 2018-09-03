@@ -3,18 +3,18 @@ import keys from "../config/keys";
 
 const initialState = {
   showLoading: false,
-    showError: false,
-    signedIn: false,
-    user: {
-      id: -1,
-      firstName: "",
-      lastName: "",
-      gender: "",
-      dateOfBirth: 0,
-      email: "",
-      tests: []
-    }
-}
+  showError: false,
+  signedIn: false,
+  user: {
+    id: -1,
+    firstName: "",
+    lastName: "",
+    gender: "",
+    dateOfBirth: 0,
+    email: "",
+    tests: []
+  }
+};
 
 const handleLoginRequest = (state, action) => {
   const newState = { ...state };
@@ -23,12 +23,12 @@ const handleLoginRequest = (state, action) => {
 };
 
 const handleLoginSuccess = (state, action) => {
-  localStorage.setItem(keys.storageTokenKey, action.payload.token);
+  localStorage.setItem(keys.storageTokenKey, action.data.token);
 
   const newState = { ...state };
   newState.showLoading = false;
   newState.signedIn = true;
-  newState.user = action.payload.user;
+  newState.user = action.data.user;
 
   return { ...newState };
 };
@@ -36,7 +36,7 @@ const handleLoginSuccess = (state, action) => {
 const handleLoginError = (state, action) => {
   const newState = { ...state };
   newState.showLoading = false;
-  console.log(action.payload)
+  console.log(action.data);
   return { ...newState };
 };
 

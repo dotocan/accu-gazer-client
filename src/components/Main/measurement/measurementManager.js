@@ -103,7 +103,6 @@ function saveMeasurement() {
 
   let measuredAt = new Date().getTime();
 
-  console.log("Current rect data " + JSON.stringify(rect));
   let measurement = { 
     measuredAt,
     rectangle,
@@ -111,7 +110,6 @@ function saveMeasurement() {
   };
 
   Test.measurements.push(measurement);
-  console.log("Test measurements: " + JSON.stringify(Test.measurements));
 }
 
 function drawRect() {

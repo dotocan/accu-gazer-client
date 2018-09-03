@@ -5,7 +5,7 @@ export const login = loginData => {
   return dispatch => {
     dispatch({
       type: actionTypes.LOGIN_REQUEST,
-      payload: ""
+      data: ""
     });
 
     instance
@@ -13,13 +13,13 @@ export const login = loginData => {
       .then(res => {
         dispatch({
           type: actionTypes.LOGIN_SUCCESS,
-          payload: res.data
+          data: res.data
         });
       })
       .catch(err => {
         dispatch({
           type: actionTypes.LOGIN_ERROR,
-          payload: err
+          data: err
         });
       });
   };
@@ -29,7 +29,7 @@ export const logout = () => {
   return dispatch => {
     dispatch({
       type: actionTypes.LOGOUT,
-      payload: false
+      data: false
     });
   };
 };

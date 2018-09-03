@@ -5,7 +5,7 @@ export const getSettings = () => {
   return dispatch => {
     dispatch({
         type: actionTypes.GET_SETTINGS_REQUEST,
-        payload: ""
+        data: ""
     });
 
     instance
@@ -13,13 +13,13 @@ export const getSettings = () => {
       .then(res => {
         dispatch({
           type: actionTypes.GET_SETTINGS_SUCCESS,
-          payload: res.data
+          data: res.data
         });
       })
       .catch(err => {
         dispatch({
           type: actionTypes.GET_SETTINGS_ERROR,
-          payload: err
+          data: err
         });
       });
   };

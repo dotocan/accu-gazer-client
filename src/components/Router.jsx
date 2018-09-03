@@ -6,6 +6,7 @@ import Settings from "./Settings";
 import NotFound from "./ErrorPages/NotFound";
 import InternalServerError from './ErrorPages/InternalServerError';
 import LoginForm from "./Auth/LoginForm";
+import Analysis from './Analysis/Analysis';
 
 const Router  = (props) => (
     <Switch>
@@ -13,6 +14,7 @@ const Router  = (props) => (
       <Route exact path="/signup" component={RegistrationForm} />
       {props.signedIn ? <Route exact path="/" component={Measurement} /> : <Redirect to="/signin" />} 
       {props.signedIn ? <Route exact path="/settings" component={Settings} /> : <Redirect to="/signin" />} 
+      {props.signedIn ? <Route exact path="/analysis" component={Analysis} /> : <Redirect to="/signin" />} 
       <Route exact path="/500" component={InternalServerError} />
       <Route component={NotFound}/>
     </Switch>

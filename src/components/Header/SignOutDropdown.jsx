@@ -12,6 +12,11 @@ class SignOutDropdown extends React.Component {
     return (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
+          <Link to="/analysis" className="nav-link">
+            Analysis
+          </Link>
+        </li>
+        <li className="nav-item">
           <Link to="/settings" className="nav-link">
             Settings
           </Link>

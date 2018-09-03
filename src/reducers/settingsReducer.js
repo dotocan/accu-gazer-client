@@ -19,13 +19,13 @@ const handleGetSettingsRequest = (state, action) => {
 const handleGetSettingsSuccess = (state, action) => {
   const newState = { ...state };
   newState.showLoading = false;
-  newState.data = action.payload;
+  newState.data = action.data;
   return { ...newState };
 };
 
 const handleGetSettingsError = (state, action) => {
   const newState = { ...state };
-  console.log(action.payload)
+  console.log(action.data)
   newState.showLoading = false;
   return { ...newState };
 };
